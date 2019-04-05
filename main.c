@@ -113,5 +113,17 @@
 #include <stdio.h>
 
 int main(void){
+    
+    
+    //ititalise the alphabet into an array
+    char alpha[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    
+    //print all elements in the array
+    for(int i = 0; i < 26; i++){
+        printf("%c\n",alpha[i]);
+    }    
+    
+    
+    
   return 0;
 }
