@@ -141,7 +141,8 @@ int main(void){
     
 
 
-    menu = 4; //scan in option here.. it is hard coded at the moment    
+    menu = 4; //scan in option here.. it is hard coded at the moment 
+    //this is a new comment for GIT
 
     while(menu != 4){
         switch(menu){
