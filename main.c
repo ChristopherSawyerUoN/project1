@@ -112,18 +112,88 @@
 
 #include <stdio.h>
 
+void stringToUpper(char []);
+
 int main(void){
-    
     
     //ititalise the alphabet into an array
     char alpha[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    char newAlpha[26];
+    int  key = 3;
+    int  menu = 0;
+    
+    /*Menu
+    Prompt user for a choice
+    CASE 1: Encrypt a message
+            recieve message text and key
+    CASE 2: Decrypt a message
+            recieve cipher text and key
+    CASE 3: Decrypt a message
+            recieve cipher text and use a dictionary to decrypt a message with no key
+    CASE 4: EXIT
+    */
+
+    printf("Enter a number to prefrom an action\n");
+    printf("1 - to encrypt a message with a key\n");
+    printf("2 - to decrypt a message with a key\n");
+    printf("3 - to decrypt a cipher with a dictionary\n");
+    printf("4 - to exit\n\n");
+    
+
+
+    menu = 4; //scan in option here.. it is hard coded at the moment    
+
+    while(menu != 4){
+        switch(menu){
+            case 1: printf("Do option 1\n");break;
+            case 2: printf("Do option 2\n");break;
+            case 3: printf("Do option 3\n");break;
+            case 4: printf("Do option 4\n");break;
+        }   
+    
+    }
+
+
+
     
     //print all elements in the array
     for(int i = 0; i < 26; i++){
-        printf("%c\n",alpha[i]);
+        printf("%c ",alpha[i]);
     }    
-    
-    
-    
-  return 0;
+    printf("\n");
+    // reorder method e(x) = (m + k)(mod 26)
+    for(int i = 0; i < 26; i++){
+        if((i+key) < 0){
+            newAlpha[i] = alpha[((i + key) % 26)];
+            printf("%c.",newAlpha[i]);
+        }else{
+            newAlpha[i] = alpha[((i + key) % 26)];
+            printf("%c ",newAlpha[i]);
+        }
+
+    }
+
+    //Print the Message
+    //Convert it to uppercase
+
+    printf("\n\n");
+    char string[] = "This is my message text";
+    printf("%s \n",string);
+    printf("Now converted into uppercase\n");
+    stringToUpper(string);
+    printf("%s\n", string);
+     
+   return 0;
+}
+ 
+void stringToUpper(char s[])
+{
+   int c = 0;
+   
+   while (s[c] != '\0') {
+      if (s[c] >= 'a' && s[c] <= 'z') {
+         s[c] = s[c] - 32;
+      }
+      c++;
+   }
 }
