@@ -112,15 +112,18 @@
 
 #include <stdio.h>
 
-void stringToUpper(char []);
+void stringToUpper(char []); //String Lowercase to Uppercase Converter
+void reorderAlpha(int key,char [],char []); //Reorder the string based on a key value rotating the string
 
 int main(void){
     
     //ititalise the alphabet into an array
     char alpha[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     char newAlpha[26];
-    int  key = 3;
-    int  menu = 0;
+    char messageText[50];
+    char encryptedMessage[50];
+    int  key;
+    int  menu;
     
     /*Menu
     Prompt user for a choice
@@ -141,7 +144,7 @@ int main(void){
     
 
 
-    menu = 4; //scan in option here.. it is hard coded at the moment 
+    scanf("%d",&menu); //scan in option here.. it is hard coded at the moment 
     //this is a new comment for GIT
 
     while(menu != 4){
@@ -154,47 +157,103 @@ int main(void){
     
     }
 
-
-
-    
     //print all elements in the array
     for(int i = 0; i < 26; i++){
         printf("%c ",alpha[i]);
     }    
     printf("\n");
-    // reorder method e(x) = (m + k)(mod 26)
-    for(int i = 0; i < 26; i++){
-        if((i+key) < 0){
-            newAlpha[i] = alpha[((i + key) % 26)];
-            printf("%c.",newAlpha[i]);
-        }else{
-            newAlpha[i] = alpha[((i + key) % 26)];
-            printf("%c ",newAlpha[i]);
-        }
 
+    
+    printf("Enter a Key: ");
+    scanf("%d",&key);
+    //Check that this number is positve
+    while(key < 0){
+        printf("Try again (use a positive number): ");
+        scanf("%d",&key);
     }
+    
+    
+    reorderAlpha(key,alpha,newAlpha);  //Put the alphabet into the new order required by the key
 
-    //Print the Message
-    //Convert it to uppercase
+    //Print the New Alphabet
+    //print all elements in the array
+    printf("The New Alphabet: \n");
+    for(int i = 0; i < 26; i++){
+        printf("%c ",newAlpha[i]);
+    }    
 
-    printf("\n\n");
+    printf("\n\n--> ");
+    
+    
+   
+    //read in the meassage text
     char string[] = "This is my message text";
+    
+    //print the message text
     printf("%s \n",string);
-    printf("Now converted into uppercase\n");
+    
+    //convert the message text to uppercase
+    printf("Now converted into uppercase:\n--> ");
     stringToUpper(string);
+    
+    //print the message text now in UPPERCASE
     printf("%s\n", string);
-     
+    
+    //Encrypt the Message
+    //compare each letter in the message to its counterpart in the new alphabet
+    //step through each letter in the message and add its deciphered version to the array encryptedMessage
+    //FOR
+    // each letter of the string
+    // check it against the alphabet
+    // store its encrypted counterpart in the array encryptedMessage
+    // then move on to the next letter
+    // untill all are encrypted
+    
+    for(int i = 0; i <= sizeof(string);i++){
+        for(int j = 0; j < 26; j++){
+            if(string[i] == alpha[j]){
+                encryptedMessage[i] == newAlpha[j];
+            }
+        }
+    }
+    
+    //print the now encrypted message
+    printf("This is the encrypted message:/n");
+    printf("%s", encryptedMessage);
+    
    return 0;
 }
  
-void stringToUpper(char s[])
-{
-   int c = 0;
-   
-   while (s[c] != '\0') {
-      if (s[c] >= 'a' && s[c] <= 'z') {
-         s[c] = s[c] - 32;
+
+// String to Uppercase
+//Input Args:
+//Char String - An array of characters - the input message that needs to be converted to uppercase
+void stringToUpper(char string[]){
+   int index = 0;
+   while (string[index] != '\0') {
+      if (string[index] >= 'a' && string[index] <= 'z') {
+          string[index] = string[index] - 32;
       }
-      c++;
+      index++;
    }
+}
+
+
+//Reorders the Alphabet in respect to the key
+//Input Args are:
+//Int Key - the rotation cipher
+//Char alpha - the Array holding the current alphabet
+//Char newAlpha - the Array holding the New Alphabet, ordered in respect to the key
+void reorderAlpha(int key,char inputString[],char outputString[]){
+    // reorder method e(x) = (m + k)(mod 26)
+    for(int i = 0; i < 26; i++){
+        if((i+key) < 0){
+            outputString[i] = inputString[((i + key) % 26)];
+            //printf("%c.",outputString[i]);
+        }else{
+            outputString[i] = inputString[((i + key) % 26)];
+            //printf("%c ",outputString[i]);
+        }
+
+    }
 }
