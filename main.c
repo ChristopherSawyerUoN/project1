@@ -111,20 +111,14 @@
  */
 
 #include <stdio.h>
-
+void program1Encrypt(void); //Message Encrypt Program
+void program2Decrypt(void); //Message Decryption Program
+void program3Decode(void);  //Decode Message using a Dictionary
+void program4Exit(void);    //Exit Program - Housekeeping
 void stringToUpper(char []); //String Lowercase to Uppercase Converter
 void reorderAlpha(int key,char [],char []); //Reorder the string based on a key value rotating the string
 
 int main(void){
-    
-    //ititalise the alphabet into an array
-    char alpha[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    char newAlpha[26];
-    char messageText[50];
-    char encryptedMessage[50];
-    int  key;
-    int  menu;
-    
     /*Menu
     Prompt user for a choice
     CASE 1: Encrypt a message
@@ -136,27 +130,48 @@ int main(void){
     CASE 4: EXIT
     */
 
-    printf("Enter a number to prefrom an action\n");
-    printf("1 - to encrypt a message with a key\n");
-    printf("2 - to decrypt a message with a key\n");
-    printf("3 - to decrypt a cipher with a dictionary\n");
-    printf("4 - to exit\n\n");
+    int  menu;
     
-
-
-    scanf("%d",&menu); //scan in option here.. it is hard coded at the moment 
-    //this is a new comment for GIT
-
     while(menu != 4){
+        printf("\nEnter a number to prefrom an action\n");
+        printf("1 - to encrypt a message with a key\n");
+        printf("2 - to decrypt a message with a key\n");
+        printf("3 - to decrypt a cipher with a dictionary\n");
+        printf("4 - to exit\n\n");
+    
+        scanf("%d",&menu); //scan in option here. 
+        while(menu < 1 || menu > 4){
+            printf("Invalid Choice - Please Try Again: ");
+            scanf("%d",&menu);
+        }
+        
+        
         switch(menu){
-            case 1: printf("Do option 1\n");break;
-            case 2: printf("Do option 2\n");break;
-            case 3: printf("Do option 3\n");break;
-            case 4: printf("Do option 4\n");break;
+            case 1: program1Encrypt();break;
+            case 2: program2Decrypt();break;
+            case 3: program3Decode();break;
+            case 4: program4Exit();break;
         }   
     
     }
+   return 0;
+}
+ 
 
+
+//==============================================================================================================================================
+// Program 1 Encrypt A Message using a rotation Cipher
+void program1Encrypt(void){
+    
+    int MAXSTRING = 100;
+    
+    //ititalise the alphabet into an array
+    char alpha[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    char cipherAlpha[MAXSTRING];
+    char messageText[MAXSTRING];
+    char encryptedMessage[MAXSTRING];
+    int  key;
+    
     //print all elements in the array
     for(int i = 0; i < 26; i++){
         printf("%c ",alpha[i]);
@@ -172,32 +187,34 @@ int main(void){
         scanf("%d",&key);
     }
     
-    
-    reorderAlpha(key,alpha,newAlpha);  //Put the alphabet into the new order required by the key
+    //Create the cipher Alphabet 
+    reorderAlpha(key,alpha,cipherAlpha);  //Put the alphabet into the new order required by the key
 
     //Print the New Alphabet
     //print all elements in the array
-    printf("The New Alphabet: \n");
+    printf("The Cipher Alphabet: \n");
     for(int i = 0; i < 26; i++){
-        printf("%c ",newAlpha[i]);
+        printf("%c ",cipherAlpha[i]);
     }    
 
     printf("\n\n--> ");
     
     
-   
-    //read in the meassage text
-    char string[] = "This is my message text";
+    //enter the message text
+    printf("Enter the message that will be encrypted: \n");
+    scanf("%s",messageText);
+    
     
     //print the message text
-    printf("%s \n",string);
+    printf("You Entered: \n-->");
+    printf("%s \n",messageText);
     
     //convert the message text to uppercase
     printf("Now converted into uppercase:\n--> ");
-    stringToUpper(string);
+    stringToUpper(messageText);
     
     //print the message text now in UPPERCASE
-    printf("%s\n", string);
+    printf("%s\n", messageText);
     
     //Encrypt the Message
     //compare each letter in the message to its counterpart in the new alphabet
@@ -209,22 +226,52 @@ int main(void){
     // then move on to the next letter
     // untill all are encrypted
     
-    for(int i = 0; i <= sizeof(string);i++){
+    for(int i = 0; i <= sizeof(messageText);i++){
+        //loop through each letter in the messageText
+   
+        //find a match to the letter in the alphabet        
         for(int j = 0; j < 26; j++){
-            if(string[i] == alpha[j]){
-                encryptedMessage[i] == newAlpha[j];
+            //loop through the alphabet
+            if(messageText[i] == alpha[j]){
+                //when a match is found, use the letters index to assign the cipher letter in the same index to the encrypted text.
+                encryptedMessage[i] == cipherAlpha[j];
+                printf("%c ",messageText[i]);
+                printf("%c ",alpha[j]);
+                printf("%c ",cipherAlpha[j]);
+                printf("%c \n",encryptedMessage[i]);
             }
         }
     }
     
     //print the now encrypted message
-    printf("This is the encrypted message:/n");
+    printf("This is the encrypted message: \n");
     printf("%s", encryptedMessage);
     
-   return 0;
-}
- 
 
+}
+
+//==============================================================================================================================================
+//Message Decryption Program
+void program2Decrypt(void){
+    printf("\nDecrypt a Message using a rotation cipher.\n");
+    printf("Feature Not Implimented - returning to main menu.\n");
+}
+
+//==============================================================================================================================================
+//Decode Message using a Dictionary
+void program3Decode(void){
+    printf("\nDecode an encrypted message using a dictionary attack.\n");
+    printf("Feature Not Implimented - returning to main menu.\n");  
+}  
+
+//==============================================================================================================================================
+//Exit Program - Housekeeping
+void program4Exit(void){
+    printf("\nProgram Closed\n");
+    printf("Christopher Sawyer - C3181689\n\n\n");
+}    
+
+//==============================================================================================================================================
 // String to Uppercase
 //Input Args:
 //Char String - An array of characters - the input message that needs to be converted to uppercase
@@ -238,7 +285,7 @@ void stringToUpper(char string[]){
    }
 }
 
-
+//==============================================================================================================================================
 //Reorders the Alphabet in respect to the key
 //Input Args are:
 //Int Key - the rotation cipher
