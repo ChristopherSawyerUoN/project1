@@ -168,7 +168,7 @@ void program1Encrypt(void){
     //ititalise the alphabet into an array
     char alpha[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     char cipherAlpha[MAXSTRING];
-    char messageText[MAXSTRING];
+    char messageText[] = "Hello World";
     char encryptedMessage[MAXSTRING];
     int  key;
     
@@ -202,7 +202,7 @@ void program1Encrypt(void){
     
     //enter the message text
     printf("Enter the message that will be encrypted: \n");
-    scanf("%s",messageText);
+    //scanf("%s",messageText);                                          //uncomment this to enable manual entry of message text
     
     
     //print the message text
@@ -225,7 +225,10 @@ void program1Encrypt(void){
     // store its encrypted counterpart in the array encryptedMessage
     // then move on to the next letter
     // untill all are encrypted
-    
+
+    //print the now encrypted message
+    printf("\nThis is the encrypted message: \n");
+
     for(int i = 0; i <= sizeof(messageText);i++){
         //loop through each letter in the messageText
    
@@ -235,28 +238,64 @@ void program1Encrypt(void){
             if(messageText[i] == alpha[j]){
                 //when a match is found, use the letters index to assign the cipher letter in the same index to the encrypted text.
                 encryptedMessage[i] == cipherAlpha[j];
-                printf("%c ",messageText[i]);
-                printf("%c ",alpha[j]);
-                printf("%c ",cipherAlpha[j]);
-                printf("%c \n",encryptedMessage[i]);
+                //printf("%c ",messageText[i]);
+                //printf("%c ",alpha[j]);
+                printf("%c",cipherAlpha[j]);
+                //printf("%c \n",encryptedMessage[i]);
+            }else{
+                if(messageText[i] == 32){
+                    //printf(" ");
+                }
             }
         }
     }
     
-    //print the now encrypted message
-    printf("This is the encrypted message: \n");
-    printf("%s", encryptedMessage);
-    
+        
 
 }
 
 //==============================================================================================================================================
 //Message Decryption Program
 void program2Decrypt(void){
+    
+    char alpha[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    char cipherAlpha[26];
+    
     printf("\nDecrypt a Message using a rotation cipher.\n");
-    printf("Feature Not Implimented - returning to main menu.\n");
-}
+    //printf("Feature Not Implimented - returning to main menu.\n");
+    
+    //decrypt "SJSFMPCRM WG O USBWIG. PIH WT MCI XIRUS O TWGV PM WHG OPWZWHM HC QZWAP O HFSS, WH KWZZ ZWJS WHG KVCZS ZWTS PSZWSJWBU HVOH WH WG GHIDWR. - OZPSFH SWBGHSWB"
 
+    char encryptedMessage[] = "SJSFMPCRM WG O USBWIG. PIH WT MCI XIRUS O TWGV PM WHG OPWZWHM HC QZWAP O HFSS, WH KWZZ ZWJS WHG KVCZS ZWTS PSZWSJWBU HVOH WH WG GHIDWR. - OZPSFH SWBGHSWB"; 
+    printf("the encrypted message:\n");
+    printf("%s", encryptedMessage);
+    int key;
+    
+
+    for(key = 0; key < 26; key++){    
+    
+        printf("\n");
+    
+        reorderAlpha(key,alpha,cipherAlpha);
+        printf("%s\n",cipherAlpha);
+
+        for(int i = 0; i <= sizeof(encryptedMessage); i++){
+        //loop through each letter in the encryptedMessage
+            //find a match to the letter in the alphabet        
+            for(int j = 0; j < 26; j++){
+                //loop through the alphabet
+                if(encryptedMessage[i] == alpha[j]){
+                //when a match is found, use the letters index to assign the cipher letter in the same index to the encrypted text.
+                encryptedMessage[i] == cipherAlpha[j];
+                //printf("%c ",messageText[i]);
+                //printf("%c ",alpha[j]);
+                printf("%c",cipherAlpha[j]);
+                //printf("%c \n",encryptedMessage[i]);
+        }
+        }
+    }
+}
+}
 //==============================================================================================================================================
 //Decode Message using a Dictionary
 void program3Decode(void){
@@ -294,13 +333,7 @@ void stringToUpper(char string[]){
 void reorderAlpha(int key,char inputString[],char outputString[]){
     // reorder method e(x) = (m + k)(mod 26)
     for(int i = 0; i < 26; i++){
-        if((i+key) < 0){
             outputString[i] = inputString[((i + key) % 26)];
             //printf("%c.",outputString[i]);
-        }else{
-            outputString[i] = inputString[((i + key) % 26)];
-            //printf("%c ",outputString[i]);
-        }
-
     }
 }
