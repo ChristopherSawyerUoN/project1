@@ -139,6 +139,7 @@ int main(void){
         printf("3 - to decrypt a cipher with a dictionary\n");
         printf("4 - to exit\n\n");
     
+        printf("Enter your selection: ");
         scanf("%d",&menu); //scan in option here. 
         while(menu < 1 || menu > 4){
             printf("Invalid Choice - Please Try Again: ");
@@ -168,7 +169,7 @@ void program1Encrypt(void){
     //ititalise the alphabet into an array
     char alpha[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     char cipherAlpha[MAXSTRING];
-    char messageText[] = "Hello World";
+    char messageText[] = "this is my message";
     char encryptedMessage[MAXSTRING];
     int  key;
     
@@ -231,28 +232,36 @@ void program1Encrypt(void){
 
     for(int i = 0; i <= sizeof(messageText);i++){
         //loop through each letter in the messageText
-   
+        //printf("%c",messageText[i]);
         //find a match to the letter in the alphabet        
-        for(int j = 0; j < 26; j++){
+        if(messageText[i] || 32){       //not a space
+            for(int j = 0; j < 26; j++){
             //loop through the alphabet
             if(messageText[i] == alpha[j]){
                 //when a match is found, use the letters index to assign the cipher letter in the same index to the encrypted text.
                 encryptedMessage[i] == cipherAlpha[j];
                 //printf("%c ",messageText[i]);
                 //printf("%c ",alpha[j]);
-                printf("%c",cipherAlpha[j]);
+                //printf("%c\n",cipherAlpha[j]);
                 //printf("%c \n",encryptedMessage[i]);
-            }else{
-                if(messageText[i] == 32){
-                    //printf(" ");
-                }
             }
+            
+        }
+
+            
         }
     }
-    
-        
+
+/*
+    for(int i = 0; i < sizeof(encryptedMessage); i++){
+        printf("%c",encryptedMessage[i]);
+    }
+*/
+
+printf("\nI couldnt get it to work.\n");
 
 }
+
 
 //==============================================================================================================================================
 //Message Decryption Program
@@ -270,14 +279,25 @@ void program2Decrypt(void){
     printf("the encrypted message:\n");
     printf("%s", encryptedMessage);
     int key;
-    
-
-    for(key = 0; key < 26; key++){    
-    
+   
+    printf("Enter a Key: ");
+    scanf("%d",&key);
+    //Check that this number is positve
+    while(key < 0){
+        printf("Try again (use a positive number): ");
+        scanf("%d",&key);
+    }
+   
+/*    printf("BRUTE FORCE DECRYTION:");
+    for(key = 0; key < 26; key++){    //loop through all itterations of the rotation based cipher alphabets
         printf("\n");
-    
+        printf("Key: %d -->",key);
+*/    
+        
         reorderAlpha(key,alpha,cipherAlpha);
-        printf("%s\n",cipherAlpha);
+        //printf("%s\n",cipherAlpha);
+
+        printf("The Decrypted Message\n");
 
         for(int i = 0; i <= sizeof(encryptedMessage); i++){
         //loop through each letter in the encryptedMessage
@@ -292,9 +312,12 @@ void program2Decrypt(void){
                 printf("%c",cipherAlpha[j]);
                 //printf("%c \n",encryptedMessage[i]);
         }
-        }
+        //}
     }
 }
+
+printf("\nI didnt get this too work.\n");
+
 }
 //==============================================================================================================================================
 //Decode Message using a Dictionary
